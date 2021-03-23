@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using BooksManager.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,8 @@ namespace BooksManager.Data
             : base(options)
         {
         }
+
+        public DbSet<Book> Books { get; set; }
+        public DbSet<ReadLog> ReadLogs { get; set; }
     }
 }
