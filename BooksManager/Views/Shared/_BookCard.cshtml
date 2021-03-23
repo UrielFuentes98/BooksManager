@@ -18,9 +18,9 @@
                 <i class="fas fa-search-plus"></i>
             </a>
             <a class="icon-link" title="Edit"
-               asp-controller=""
-               asp-action=""
-               asp-route-isEdit="true">
+               asp-controller="Book"
+               asp-action="Edit"
+               asp-route-bookId="@Model.BookId">
                 <i class="far fa-edit"></i>
             </a>
             <a class="icon-link" title="Delete"

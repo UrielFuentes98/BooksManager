@@ -8,5 +8,11 @@ namespace BooksManager.Models
     public interface IBooksRepository
     {
         IEnumerable<Book> GetBooksFromUser(string userName);
+
+        Book GetBookById(int bookId);
+
+        void AddBook(Book book);
+
+        void UpdateBook(Book book);
     }
 }

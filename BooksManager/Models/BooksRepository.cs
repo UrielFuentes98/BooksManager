@@ -15,9 +15,26 @@ namespace BooksManager.Models
             this.dbContext = dbContext;
         }
 
+        public void AddBook(Book book)
+        {
+            dbContext.Books.Add(book);
+            dbContext.SaveChanges();
+        }
+
+        public Book GetBookById(int bookId)
+        {
+            return dbContext.Books.Single(b => b.BookId == bookId);
+        }
+
         public IEnumerable<Book> GetBooksFromUser(string userName)
         {
             return dbContext.Books.Where(b => b.UserName == userName);
+        }
+
+        public void UpdateBook(Book book)
+        {
+            dbContext.Books.Update(book);
+            dbContext.SaveChanges();
         }
     }
 }

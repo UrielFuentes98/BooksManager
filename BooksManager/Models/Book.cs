@@ -8,6 +8,12 @@ namespace BooksManager.Models
 {
     public class Book
     {
+
+        public Book()
+        {
+
+        }
+
         public int BookId { get; set; }
 
         public string UserName { get; set; }
