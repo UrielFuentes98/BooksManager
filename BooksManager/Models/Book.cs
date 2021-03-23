@@ -10,16 +10,19 @@ namespace BooksManager.Models
     {
         public int BookId { get; set; }
 
-        [Required]
+        public string UserName { get; set; }
+
+        [Required(ErrorMessage = "Please enter a Name for the book.")]
         public string Name { get; set; }
 
         public string Author { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter the number of pages of the book.")]
+        [Display(Name = "Number of Pages")]
         public int NumberOfPages { get; set; }
 
         public string Note { get; set; }
 
-        public List<ReadLog> ReadLogs { get; set; }
+        public List<ReadLog> ReadLogs { get; set; } = new List<ReadLog>();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BooksManager.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,15 +13,19 @@ namespace BooksManager.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IBooksRepository booksRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IBooksRepository booksRepository)
         {
             _logger = logger;
+            this.booksRepository = booksRepository;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
-            return View();
+            var bookList = booksRepository.GetBooksFromUser(User.Identity.Name);
+            return View(bookList);
         }
 
         public IActionResult Privacy()

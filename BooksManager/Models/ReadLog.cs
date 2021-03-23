@@ -10,10 +10,12 @@ namespace BooksManager.Models
     {
         public int ReadLogId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter the page number for the log.")]
+        [Display(Name = "Page Number")]
         public int PageNumber { get; set; }
 
         [Required]
+        [Display(Name = "Date of Log")]
         public DateTime LogDate { get; set; }
 
         public string Note { get; set; }

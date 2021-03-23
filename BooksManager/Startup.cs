@@ -1,4 +1,5 @@
 using BooksManager.Data;
+using BooksManager.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,6 +34,7 @@ namespace BooksManager
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddScoped<IBooksRepository, BooksRepository>();
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.

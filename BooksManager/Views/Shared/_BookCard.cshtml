@@ -1,0 +1,33 @@
+﻿@model Book
+
+<div class="col-lg-4 col-sm-6 mb-3">
+    <div class="card pt-2">
+        <div class="card-body pb-1">
+            <a asp-controller=""
+               asp-action="">
+                <h5 class="card-title">@Model.Name</h5>
+            </a>
+            @if (!String.IsNullOrEmpty(Model.Author))
+            {
+                <p class="card-entry"><strong>Author: </strong>@Model.Author.</p>
+            }
+            <p class="card-entry">@Model.NumberOfPages pages.</p>
+            <a class="icon-link" title="Detail"
+               asp-controller=""
+               asp-action="">
+                <i class="fas fa-search-plus"></i>
+            </a>
+            <a class="icon-link" title="Edit"
+               asp-controller=""
+               asp-action=""
+               asp-route-isEdit="true">
+                <i class="far fa-edit"></i>
+            </a>
+            <a class="icon-link" title="Delete"
+               asp-controller=""
+               asp-action="">
+                <i class="fas fa-trash"></i>
+            </a>
+        </div>
+    </div>
+</div>

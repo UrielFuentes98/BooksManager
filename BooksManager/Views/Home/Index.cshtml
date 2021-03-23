@@ -1,8 +1,18 @@
-﻿@{
+﻿@model IEnumerable<Book> 
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    @foreach (var book in Model)
+    {
+        <partial name="_BookCard" model="book" />
+    }
 </div>
+
+<a asp-controller=""
+   asp-action=""
+   class="btn btn-primary">
+    Add Book
+</a>
