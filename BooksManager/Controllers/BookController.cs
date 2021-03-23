@@ -54,5 +54,11 @@ namespace BooksManager.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult Detail (int bookId)
+        {
+            var bookDetail = booksRepository.GetBookById(bookId);
+            return View(bookDetail);
+        }
+
     }
 }

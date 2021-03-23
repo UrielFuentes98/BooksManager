@@ -1,11 +1,13 @@
 ﻿@model Book
 
 <div class="col-lg-4 col-sm-6 mb-3">
-    <div class="card pt-2">
+    <div class="card pt-1">
         <div class="card-body pb-1">
-            <a asp-controller=""
-               asp-action="">
-                <h5 class="card-title">@Model.Name</h5>
+            <a class="book-title"
+               asp-controller="Book"
+               asp-action="Detail"
+               asp-route-bookId="@Model.BookId">
+                <h5 class="card-title ">@Model.Name</h5>
             </a>
             @if (!String.IsNullOrEmpty(Model.Author))
             {
@@ -13,8 +15,9 @@
             }
             <p class="card-entry">@Model.NumberOfPages pages.</p>
             <a class="icon-link" title="Detail"
-               asp-controller=""
-               asp-action="">
+               asp-controller="Book"
+               asp-action="Detail"
+               asp-route-bookId="@Model.BookId">
                 <i class="fas fa-search-plus"></i>
             </a>
             <a class="icon-link" title="Edit"

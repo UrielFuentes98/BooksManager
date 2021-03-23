@@ -1,0 +1,31 @@
+﻿@model Book
+
+@{
+    ViewData["Title"] = "Book Detail";
+}
+
+<div class="row justify-content-center">
+    <div class="col-5 card pt-3 " style="background-color: cornsilk;">
+
+        <h3 class="text-center">@Model.Name</h3>
+
+        @if (!String.IsNullOrEmpty(Model.Author))
+        {
+            <div class="detail-entry">
+                <span class="font-weight-bold">Author: </span>
+                <span>@Model.Author</span>
+            </div>
+        }
+        <div class="detail-entry">
+            <span class="font-weight-bold">Number of Pages: </span>
+            <span>@Model.NumberOfPages</span>
+        </div>
+
+        @if (!String.IsNullOrEmpty(Model.Note))
+        {
+                <div class="font-weight-bold detail-entry">Notes: </div>
+                <div class="card detail-note bg-light">@Model.Note</div>
+        }
+
+    </div>
+</div>
