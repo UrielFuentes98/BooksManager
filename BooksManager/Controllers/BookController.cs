@@ -60,5 +60,18 @@ namespace BooksManager.Controllers
             return View(bookDetail);
         }
 
+        public IActionResult DeletePreview(int bookId)
+        {
+            var bookToDelete = booksRepository.GetBookById(bookId);
+            return View("Delete/DeletePreview", bookToDelete);
+        }
+
+        public IActionResult DeleteConfirmation(int bookId)
+        {
+            var bookToDelete = booksRepository.GetBookById(bookId);
+            booksRepository.DeleteBook(bookToDelete);
+            return View("Delete/DeleteConfirmation");
+        }
+
     }
 }

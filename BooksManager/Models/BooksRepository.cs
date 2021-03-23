@@ -21,6 +21,12 @@ namespace BooksManager.Models
             dbContext.SaveChanges();
         }
 
+        public void DeleteBook(Book book)
+        {
+            dbContext.Books.Remove(book);
+            dbContext.SaveChanges();
+        }
+
         public Book GetBookById(int bookId)
         {
             return dbContext.Books.Single(b => b.BookId == bookId);

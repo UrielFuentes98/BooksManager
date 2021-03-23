@@ -27,8 +27,9 @@
                 <i class="far fa-edit"></i>
             </a>
             <a class="icon-link" title="Delete"
-               asp-controller=""
-               asp-action="">
+               asp-controller="Book"
+               asp-action="DeletePreview"
+               asp-route-bookId="@Model.BookId">
                 <i class="fas fa-trash"></i>
             </a>
         </div>

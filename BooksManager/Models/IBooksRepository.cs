@@ -14,5 +14,7 @@ namespace BooksManager.Models
         void AddBook(Book book);
 
         void UpdateBook(Book book);
+
+        void DeleteBook(Book book);
     }
 }
