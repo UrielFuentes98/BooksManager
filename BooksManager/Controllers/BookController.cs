@@ -23,11 +23,13 @@ namespace BooksManager.Controllers
             //If bookId passed as parameter search book, else create one
             if (bookId > 0)
             {
+                ViewData["Mode"] = "Edit";
                 var bookToEdit = booksRepository.GetBookById(bookId);
                 return View(bookToEdit);
             }
             else
             {
+                ViewData["Mode"] = "Create";
                 var newBook = new Book();
                 return View(newBook);
             }
@@ -35,7 +37,7 @@ namespace BooksManager.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Edit(Book bookReturned)
+        public IActionResult Edit(Book bookReturned, string reading)
         {
             //If model is not valid return to inform the user
             if (!ModelState.IsValid)
@@ -47,13 +49,29 @@ namespace BooksManager.Controllers
             if (bookReturned.BookId > 0)
             {
                 booksRepository.UpdateBook(bookReturned);
+                return RedirectToAction("Index", "Home");
             }
             else
             {
                 bookReturned.UserName = User.Identity.Name;
-                booksRepository.AddBook(bookReturned);
+
+                //If not currently reading, add book and return home,
+                //else add book and redirect to new log
+                if (String.IsNullOrEmpty(reading))
+                {
+                    bookReturned.Status = BookStatus.CurrentlyReading;
+                    booksRepository.AddBook(bookReturned);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    bookReturned.Status = BookStatus.ToRead;
+                    booksRepository.AddBook(bookReturned);
+                    return RedirectToAction("Create", "ReadLogs", 
+                        new { bookId = bookReturned.BookId, bookName = bookReturned.Name });
+                }
             }
-            return RedirectToAction("Index", "Home");
+            
         }
 
         public IActionResult Detail (int bookId)

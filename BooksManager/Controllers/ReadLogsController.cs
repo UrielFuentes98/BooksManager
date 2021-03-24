@@ -65,7 +65,7 @@ namespace BooksManager.Controllers
             {
                 readLog.BookId = bookId;
                 readLogsRepository.AddLog(readLog);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Detail","Book", new { bookId });
             }
             ViewData["BookId"] = new SelectList(_context.Books, "BookId", "Name", readLog.BookId);
             return View(readLog);
