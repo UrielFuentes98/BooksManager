@@ -18,7 +18,7 @@ namespace BooksManager.Controllers
         }
 
         [Authorize]
-        public IActionResult Edit(int bookId)
+        public IActionResult Edit(int bookId, BookStatus newStatus)
         {
             //If bookId passed as parameter search book, else create one
             if (bookId > 0)
@@ -30,14 +30,14 @@ namespace BooksManager.Controllers
             else
             {
                 ViewData["Mode"] = "Create";
-                var newBook = new Book();
+                var newBook = new Book() { Status = newStatus };
                 return View(newBook);
             }
         }
 
         [Authorize]
         [HttpPost]
-        public IActionResult Edit(Book bookReturned, string reading)
+        public IActionResult Edit(Book bookReturned)
         {
             //If model is not valid return to inform the user
             if (!ModelState.IsValid)
@@ -45,7 +45,7 @@ namespace BooksManager.Controllers
                 return View();
             }
 
-            //If book has valid id, update it, else delete it.
+            //If book has valid id, update it, else create it.
             if (bookReturned.BookId > 0)
             {
                 booksRepository.UpdateBook(bookReturned);
@@ -55,21 +55,31 @@ namespace BooksManager.Controllers
             {
                 bookReturned.UserName = User.Identity.Name;
 
-                //If not currently reading, add book and return home,
-                //else add book and redirect to new log
-                if (String.IsNullOrEmpty(reading))
+                switch(bookReturned.Status)
                 {
-                    bookReturned.Status = BookStatus.CurrentlyReading;
-                    booksRepository.AddBook(bookReturned);
-                    return RedirectToAction("Index", "Home");
+                    case BookStatus.ToRead:
+                        booksRepository.AddBook(bookReturned);
+                        return RedirectToAction("Index", "Home");
+
+                    case BookStatus.CurrentlyReading:
+                        booksRepository.AddBook(bookReturned);
+                        //Ask for initial log of book
+                        return RedirectToAction("Create", "ReadLogs",
+                            new { bookId = bookReturned.BookId, bookName = bookReturned.Name });
+                        
+                    case BookStatus.Read:
+                        //Create finish log for book
+                        var finishLog = new ReadLog()
+                        { Book = bookReturned, LogDate = DateTime.Today, PageNumber = bookReturned.NumberOfPages };
+                        
+                        //Add log and save book
+                        bookReturned.ReadLogs.Add(finishLog);
+                        booksRepository.AddBook(bookReturned);
+                        return RedirectToAction("Index", "Home");
+                    default:
+                        return RedirectToAction("Index", "Home");
                 }
-                else
-                {
-                    bookReturned.Status = BookStatus.ToRead;
-                    booksRepository.AddBook(bookReturned);
-                    return RedirectToAction("Create", "ReadLogs", 
-                        new { bookId = bookReturned.BookId, bookName = bookReturned.Name });
-                }
+                
             }
             
         }

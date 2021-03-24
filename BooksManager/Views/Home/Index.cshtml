@@ -13,6 +13,7 @@
 </div>
 <a asp-controller="Book"
    asp-action="Edit"
+   asp-route-newStatus="@BookStatus.ToRead"
    class="btn btn-primary">
     Add Book
 </a>
@@ -27,6 +28,7 @@
 </div>
 <a asp-controller="Book"
    asp-action="Edit"
+   asp-route-newStatus="@BookStatus.CurrentlyReading"
    class="btn btn-primary">
     Add Book
 </a>
@@ -41,6 +43,7 @@
 </div>
 <a asp-controller="Book"
    asp-action="Edit"
+   asp-route-newStatus="@BookStatus.Read"
    class="btn btn-primary">
     Add Book
 </a>
