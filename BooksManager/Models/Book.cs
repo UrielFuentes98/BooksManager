@@ -24,6 +24,7 @@ namespace BooksManager.Models
         public string Author { get; set; }
 
         [Required(ErrorMessage = "Please enter the number of pages of the book.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Number of Pages must be positve.")]
         [Display(Name = "Number of Pages")]
         public int NumberOfPages { get; set; }
 
