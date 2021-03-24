@@ -20,6 +20,7 @@ namespace BooksManager.Controllers
         [Authorize]
         public IActionResult Edit(int bookId)
         {
+            //If bookId passed as parameter search book, else create one
             if (bookId > 0)
             {
                 var bookToEdit = booksRepository.GetBookById(bookId);
@@ -42,6 +43,7 @@ namespace BooksManager.Controllers
                 return View();
             }
 
+            //If book has valid id, update it, else delete it.
             if (bookReturned.BookId > 0)
             {
                 booksRepository.UpdateBook(bookReturned);
@@ -71,6 +73,16 @@ namespace BooksManager.Controllers
             var bookToDelete = booksRepository.GetBookById(bookId);
             booksRepository.DeleteBook(bookToDelete);
             return View("Delete/DeleteConfirmation");
+        }
+
+        public IActionResult Logs (int bookId, string bookName)
+        {
+            var bookOfLogs = booksRepository.GetBookById(bookId);
+
+            //Order by date for correct display on table
+            bookOfLogs.ReadLogs = bookOfLogs.ReadLogs.OrderBy(l => l.LogDate).ToList();
+
+            return View(bookOfLogs);
         }
 
     }

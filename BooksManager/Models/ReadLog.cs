@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,6 +17,8 @@ namespace BooksManager.Models
 
         [Required]
         [Display(Name = "Date of Log")]
+        [DisplayFormat(DataFormatString = "{0:d}")]
+        [Column(TypeName = "Date")]
         public DateTime LogDate { get; set; }
 
         public string Note { get; set; }

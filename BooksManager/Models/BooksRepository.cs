@@ -1,4 +1,5 @@
 ﻿using BooksManager.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace BooksManager.Models
 
         public Book GetBookById(int bookId)
         {
-            return dbContext.Books.Single(b => b.BookId == bookId);
+            return dbContext.Books.Include(b => b.ReadLogs).Single(b => b.BookId == bookId);
         }
 
         public IEnumerable<Book> GetBooksFromUser(string userName)

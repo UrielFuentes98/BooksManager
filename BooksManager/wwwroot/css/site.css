@@ -94,3 +94,11 @@ body {
 .book-title, .book-title:hover {
     color: black;
 }
+
+.book-title-card {
+    font-style: italic;
+}
+
+.card-item {
+    background-color: cornsilk;
+}

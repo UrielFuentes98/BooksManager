@@ -35,6 +35,8 @@ namespace BooksManager
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<IBooksRepository, BooksRepository>();
+            services.AddScoped<IReadLogsRepository, ReadLogsRepository>();
+
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.
