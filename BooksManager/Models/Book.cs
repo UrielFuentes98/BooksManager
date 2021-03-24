@@ -29,6 +29,8 @@ namespace BooksManager.Models
 
         public string Note { get; set; }
 
+        public BookStatus Status { get; set; }
+
         public List<ReadLog> ReadLogs { get; set; } = new List<ReadLog>();
         public Book Include { get; internal set; }
     }

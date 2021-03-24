@@ -82,6 +82,8 @@ namespace BooksManager.Controllers
             //Order by date for correct display on table
             bookOfLogs.ReadLogs = bookOfLogs.ReadLogs.OrderBy(l => l.LogDate).ToList();
 
+
+
             return View(bookOfLogs);
         }
 
