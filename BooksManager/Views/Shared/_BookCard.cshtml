@@ -6,7 +6,7 @@
             <a class="book-title"
                asp-controller="Book"
                asp-action="Detail"
-               asp-route-bookId="@Model.BookId">
+               asp-route-id="@Model.BookId">
                 <h5 class="card-title ">@Model.Name</h5>
             </a>
             @if (!String.IsNullOrEmpty(Model.Author))
@@ -30,7 +30,7 @@
                 <a class="icon-link" title="Detail"
                    asp-controller="Book"
                    asp-action="Detail"
-                   asp-route-bookId="@Model.BookId">
+                   asp-route-id="@Model.BookId">
                     <i class="fas fa-search-plus"></i>
                 </a>
                 <a class="icon-link" title="Edit"
@@ -42,7 +42,7 @@
                 <a class="icon-link" title="Delete"
                    asp-controller="Book"
                    asp-action="DeletePreview"
-                   asp-route-bookId="@Model.BookId">
+                   asp-route-id="@Model.BookId">
                     <i class="fas fa-trash"></i>
                 </a>
             </div>

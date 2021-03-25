@@ -7,13 +7,14 @@
 
 <h1>Edit</h1>
 
-<h4>ReadLog</h4>
+<h4>Read Log</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ReadLogId" />
+            <input type="hidden" asp-for="BookId" />
             <div class="form-group">
                 <label asp-for="PageNumber" class="control-label"></label>
                 <input asp-for="PageNumber" class="form-control" />
@@ -21,7 +22,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="LogDate" class="control-label"></label>
-                <input asp-for="LogDate" class="form-control" />
+                <input type="date" asp-for="LogDate" class="form-control" />
                 <span asp-validation-for="LogDate" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -29,11 +30,11 @@
                 <input asp-for="Note" class="form-control" />
                 <span asp-validation-for="Note" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="BookId" class="control-label"></label>
                 <select asp-for="BookId" class="form-control" asp-items="ViewBag.BookId"></select>
                 <span asp-validation-for="BookId" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -42,7 +43,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Book" asp-action="Logs" asp-route-id="@Model.BookId">Back to List</a>
 </div>
 
 @section Scripts {

@@ -39,5 +39,5 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.ReadLogId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Book" asp-action="Logs" asp-route-id="@Model.BookId">Back to List</a>
 </div>

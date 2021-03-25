@@ -89,5 +89,16 @@ namespace BooksManager.Models
             dbContext.Remove(logToDelete);
             dbContext.SaveChanges();
         }
+
+        public ReadLog GetLogById(int logId)
+        {
+            return dbContext.ReadLogs.SingleOrDefault(l => l.ReadLogId == logId);
+        }
+
+        public void UpdateLog(ReadLog log)
+        {
+            dbContext.Update(log);
+            dbContext.SaveChanges();
+        }
     }
 }

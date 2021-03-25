@@ -18,13 +18,13 @@ namespace BooksManager.Controllers
         }
 
         [Authorize]
-        public IActionResult Edit(int bookId, BookStatus newStatus)
+        public IActionResult Edit(int id, BookStatus newStatus)
         {
             //If bookId passed as parameter search book, else create one
-            if (bookId > 0)
+            if (id > 0)
             {
                 ViewData["Mode"] = "Edit";
-                var bookToEdit = booksRepository.GetBookById(bookId);
+                var bookToEdit = booksRepository.GetBookById(id);
                 return View(bookToEdit);
             }
             else
@@ -84,28 +84,28 @@ namespace BooksManager.Controllers
             
         }
 
-        public IActionResult Detail (int bookId)
+        public IActionResult Detail (int id)
         {
-            var bookDetail = booksRepository.GetBookById(bookId);
+            var bookDetail = booksRepository.GetBookById(id);
             return View(bookDetail);
         }
 
-        public IActionResult DeletePreview(int bookId)
+        public IActionResult DeletePreview(int id)
         {
-            var bookToDelete = booksRepository.GetBookById(bookId);
+            var bookToDelete = booksRepository.GetBookById(id);
             return View("Delete/DeletePreview", bookToDelete);
         }
 
-        public IActionResult DeleteConfirmation(int bookId)
+        public IActionResult DeleteConfirmation(int id)
         {
-            var bookToDelete = booksRepository.GetBookById(bookId);
+            var bookToDelete = booksRepository.GetBookById(id);
             booksRepository.DeleteBook(bookToDelete);
             return View("Delete/DeleteConfirmation");
         }
 
-        public IActionResult Logs (int bookId)
+        public IActionResult Logs (int id)
         {
-            var bookOfLogs = booksRepository.GetBookById(bookId);
+            var bookOfLogs = booksRepository.GetBookById(id);
 
             //Order by date for correct display on table
             bookOfLogs.ReadLogs = bookOfLogs.ReadLogs.OrderBy(l => l.PageNumber).ToList();

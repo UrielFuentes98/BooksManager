@@ -10,5 +10,9 @@ namespace BooksManager.Models
         bool AddLog(ReadLog newLog);
 
         void DeleteLog(int logId);
+
+        ReadLog GetLogById(int logId);
+
+        void UpdateLog(ReadLog log);
     }
 }

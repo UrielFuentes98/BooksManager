@@ -29,16 +29,9 @@ namespace BooksManager.Controllers
         }
 
         // GET: ReadLogs/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var readLog = await _context.ReadLogs
-                .Include(r => r.Book)
-                .FirstOrDefaultAsync(m => m.ReadLogId == id);
+            var readLog = readLogsRepository.GetLogById(id);
             if (readLog == null)
             {
                 return NotFound();
@@ -48,9 +41,9 @@ namespace BooksManager.Controllers
         }
 
         // GET: ReadLogs/Create
-        public IActionResult Create(int bookId, string bookName)
+        public IActionResult Create(int id, string bookName)
         {
-            ViewData["BookId"] = bookId;
+            ViewData["BookId"] = id;
             ViewData["BookName"] = bookName;
             return View();
         }
@@ -59,15 +52,15 @@ namespace BooksManager.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("ReadLogId,PageNumber,LogDate,Note")] ReadLog readLog, int bookId, string bookName)
+        public IActionResult Create([Bind("ReadLogId,PageNumber,LogDate,Note")] ReadLog readLog, int id, string bookName)
         {
             if (ModelState.IsValid)
             {
-                readLog.BookId = bookId;
+                readLog.BookId = id;
                 var logCreated = readLogsRepository.AddLog(readLog);
                 if (logCreated)
                 {
-                    return RedirectToAction("Detail", "Book", new { bookId });
+                    return RedirectToAction("Detail", "Book", new { id });
                 }
                 else
                 {
@@ -75,25 +68,21 @@ namespace BooksManager.Controllers
                 }
             }
             //ViewData["BookId"] = new SelectList(_context.Books, "BookId", "Name", readLog.BookId);
-            ViewData["BookId"] = bookId;
+            ViewData["BookId"] = id;
             ViewData["BookName"] = bookName;
             return View(readLog);
         }
 
         // GET: ReadLogs/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var readLog = await _context.ReadLogs.FindAsync(id);
+            var readLog = readLogsRepository.GetLogById(id);
             if (readLog == null)
             {
                 return NotFound();
             }
-            ViewData["BookId"] = new SelectList(_context.Books, "BookId", "Name", readLog.BookId);
+            //ViewData["BookId"] = new SelectList(_context.Books, "BookId", "Name", readLog.BookId);
             return View(readLog);
         }
 
@@ -102,7 +91,7 @@ namespace BooksManager.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ReadLogId,PageNumber,LogDate,Note,BookId")] ReadLog readLog)
+        public IActionResult Edit(int id, [Bind("ReadLogId,PageNumber,LogDate,Note,BookId")] ReadLog readLog)
         {
             if (id != readLog.ReadLogId)
             {
@@ -113,8 +102,7 @@ namespace BooksManager.Controllers
             {
                 try
                 {
-                    _context.Update(readLog);
-                    await _context.SaveChangesAsync();
+                    readLogsRepository.UpdateLog(readLog);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -127,19 +115,19 @@ namespace BooksManager.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Logs", "Book", new { id = readLog.BookId });
             }
             ViewData["BookId"] = new SelectList(_context.Books, "BookId", "Name", readLog.BookId);
             return View(readLog);
         }
 
         // GET: ReadLogs/Delete/5
-        public IActionResult Delete(int logId, int bookId)
+        public IActionResult Delete(int id, int bookId)
         {
 
-            readLogsRepository.DeleteLog(logId);
+            readLogsRepository.DeleteLog(id);
 
-            return RedirectToAction("Logs", "Book", new { bookId });
+            return RedirectToAction("Logs", "Book", new { id = bookId });
         }
 
         private bool ReadLogExists(int id)

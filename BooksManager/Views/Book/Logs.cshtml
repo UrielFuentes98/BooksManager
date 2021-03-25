@@ -18,16 +18,31 @@
                     @foreach (var (log, index) in Model.ReadLogs.WithIndex())
                     {
                         <tr>
-                            <th scope="row">@index</th>
+                            <th scope="row">
+                                @index
+                                
+                            </th>
                             <td>@Html.DisplayFor(modelItem => log.LogDate)</td>
                             <td>@log.PageNumber</td>
                             <td>
                                 <a class="icon-link delete-log" title="Delete"
                                    asp-controller="ReadLogs"
                                    asp-action="Delete"
-                                   asp-route-logId="@log.ReadLogId"
+                                   asp-route-id="@log.ReadLogId"
                                    asp-route-bookId="@Model.BookId">
                                     <i class="fas fa-times"></i>
+                                </a>
+                                <a class="icon-link" title="Detail"
+                                   asp-controller="ReadLogs"
+                                   asp-action="Details"
+                                   asp-route-id="@Model.BookId">
+                                    <i class="fas fa-search-plus"></i>
+                                </a>
+                                <a class="icon-link" title="Edit"
+                                   asp-controller="ReadLogs"
+                                   asp-action="Edit"
+                                   asp-route-id="@log.ReadLogId">
+                                    <i class="far fa-edit"></i>
                                 </a>
                             </td>
                         </tr>
@@ -42,7 +57,7 @@
         <a class="mb-2"
            asp-controller="ReadLogs"
            asp-action="Create"
-           asp-route-bookId="@Model.BookId"
+           asp-route-id="@Model.BookId"
            asp-route-bookName="@Model.Name">Add Log</a>
         <a class="mb-2"
            asp-controller="Book"
