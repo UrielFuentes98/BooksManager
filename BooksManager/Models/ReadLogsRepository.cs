@@ -1,4 +1,5 @@
 ﻿using BooksManager.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,72 @@ namespace BooksManager.Models
         {
             this.dbContext = dbContext;
         }
-        public void AddLog(ReadLog newLog)
+        public bool AddLog(ReadLog newLog)
         {
-            dbContext.Add(newLog);
-            dbContext.SaveChanges();
+            var newBook = dbContext.Books.Include(b => b.ReadLogs).SingleOrDefault(b => b.BookId == newLog.BookId);
+            var previousLogs = newBook.ReadLogs.OrderBy(l => l.PageNumber).ToList();
+
+            var validated = false;
+
+            //If no other logs only check page number is between number of pages of book
+            if (previousLogs.Count() == 0)
+            {
+                if (newLog.PageNumber <= newBook.NumberOfPages)
+                {
+                    validated = true;
+                }
+            }
+            else
+            {
+                for (var index = 0; index < previousLogs.Count(); index++)
+                { 
+                    if (newLog.PageNumber < previousLogs[index].PageNumber)
+                    {
+                        if (index > 0)
+                        {
+                            //Only check lower bound if it exist.
+                            //Log with lower page num has to have earlier or equal date.
+                            if (previousLogs[index - 1].LogDate.Date > newLog.LogDate.Date)
+                            {
+                                break;
+                            }
+                        }
+                        //Check upper bound.
+                        //Log with higher page num has to have later or equal date.
+                        if (previousLogs[index].LogDate.Date < newLog.LogDate.Date)
+                        {
+                            break;
+                        }
+
+                        //Both checks passed
+                        validated = true;
+                        break;
+                    }
+
+                    //New log has highest page num, check lower bound and number of pages
+                    if (index == previousLogs.Count() - 1)
+                    {
+                        //Log with lower page num has to have earlier or equal date.
+                        if (previousLogs[index].LogDate.Date > newLog.LogDate.Date)
+                        {
+                            break;
+                        }
+
+                        if (newLog.PageNumber <= newBook.NumberOfPages)
+                        {
+                            validated = true;
+                        }
+                    }
+                }
+            }
+
+            if (validated)
+            {
+                dbContext.Add(newLog);
+                dbContext.SaveChanges();
+            }
+
+            return validated;
         }
     }
 }

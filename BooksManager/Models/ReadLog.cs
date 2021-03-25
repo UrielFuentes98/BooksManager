@@ -11,6 +11,7 @@ namespace BooksManager.Models
     {
         public int ReadLogId { get; set; }
 
+        [Range(1, int.MaxValue, ErrorMessage = "Number of Pages must be positve.")]
         [Required(ErrorMessage = "Please enter the page number for the log.")]
         [Display(Name = "Page Number")]
         public int PageNumber { get; set; }

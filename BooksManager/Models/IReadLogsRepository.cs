@@ -7,6 +7,6 @@ namespace BooksManager.Models
 {
     public interface IReadLogsRepository
     {
-        void AddLog(ReadLog newLog);
+        bool AddLog(ReadLog newLog);
     }
 }
