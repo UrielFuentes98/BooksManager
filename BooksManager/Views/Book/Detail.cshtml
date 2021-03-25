@@ -26,6 +26,22 @@
             <div class="font-weight-bold detail-entry">Notes: </div>
             <div class="card detail-note bg-light">@Model.Note</div>
         }
+
+        <div class="mt-2">
+            <a class="icon-link" title="Edit"
+               asp-controller="Book"
+               asp-action="Edit"
+               asp-route-bookId="@Model.BookId">
+                <i class="far fa-edit"></i>
+            </a>
+            <a class="icon-link" title="Delete"
+               asp-controller="Book"
+               asp-action="DeletePreview"
+               asp-route-bookId="@Model.BookId">
+                <i class="fas fa-trash"></i>
+            </a>
+        </div>
+
         <a class="mb-1 mt-1"
            asp-controller="Book"
            asp-action="Logs"
