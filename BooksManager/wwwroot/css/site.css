@@ -91,6 +91,10 @@ body {
     text-decoration: none;
 }
 
+.delete-log, .delete-log:hover {
+    color: red;
+}
+
 .book-title, .book-title:hover {
     color: black;
 }

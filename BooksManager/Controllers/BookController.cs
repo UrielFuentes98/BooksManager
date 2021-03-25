@@ -103,7 +103,7 @@ namespace BooksManager.Controllers
             return View("Delete/DeleteConfirmation");
         }
 
-        public IActionResult Logs (int bookId, string bookName)
+        public IActionResult Logs (int bookId)
         {
             var bookOfLogs = booksRepository.GetBookById(bookId);
 

@@ -82,5 +82,12 @@ namespace BooksManager.Models
 
             return validated;
         }
+
+        public void DeleteLog(int logId)
+        {
+            var logToDelete = dbContext.ReadLogs.Single(l => l.ReadLogId == logId);
+            dbContext.Remove(logToDelete);
+            dbContext.SaveChanges();
+        }
     }
 }

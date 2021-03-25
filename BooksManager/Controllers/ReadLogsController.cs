@@ -134,33 +134,12 @@ namespace BooksManager.Controllers
         }
 
         // GET: ReadLogs/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int logId, int bookId)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var readLog = await _context.ReadLogs
-                .Include(r => r.Book)
-                .FirstOrDefaultAsync(m => m.ReadLogId == id);
-            if (readLog == null)
-            {
-                return NotFound();
-            }
+            readLogsRepository.DeleteLog(logId);
 
-            return View(readLog);
-        }
-
-        // POST: ReadLogs/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var readLog = await _context.ReadLogs.FindAsync(id);
-            _context.ReadLogs.Remove(readLog);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Logs", "Book", new { bookId });
         }
 
         private bool ReadLogExists(int id)

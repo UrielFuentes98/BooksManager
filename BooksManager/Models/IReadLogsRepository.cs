@@ -8,5 +8,7 @@ namespace BooksManager.Models
     public interface IReadLogsRepository
     {
         bool AddLog(ReadLog newLog);
+
+        void DeleteLog(int logId);
     }
 }
