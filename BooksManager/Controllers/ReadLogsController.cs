@@ -59,15 +59,24 @@ namespace BooksManager.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("ReadLogId,PageNumber,LogDate,Note")] ReadLog readLog, int bookId)
+        public IActionResult Create([Bind("ReadLogId,PageNumber,LogDate,Note")] ReadLog readLog, int bookId, string bookName)
         {
             if (ModelState.IsValid)
             {
                 readLog.BookId = bookId;
-                readLogsRepository.AddLog(readLog);
-                return RedirectToAction("Detail","Book", new { bookId });
+                var logCreated = readLogsRepository.AddLog(readLog);
+                if (logCreated)
+                {
+                    return RedirectToAction("Detail", "Book", new { bookId });
+                }
+                else
+                {
+                    ModelState.AddModelError("log-validation", "There was an error validating the log. Check either the page number or the date.");
+                }
             }
-            ViewData["BookId"] = new SelectList(_context.Books, "BookId", "Name", readLog.BookId);
+            //ViewData["BookId"] = new SelectList(_context.Books, "BookId", "Name", readLog.BookId);
+            ViewData["BookId"] = bookId;
+            ViewData["BookName"] = bookName;
             return View(readLog);
         }
 

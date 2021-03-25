@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" asp-route-bookId="@ViewData["BookId"]">
+        <form asp-action="Create" asp-route-bookId="@ViewData["BookId"]" asp-route-bookName="@ViewData["BookName"]">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="PageNumber" class="control-label"></label>
@@ -30,6 +30,7 @@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
+            <span class="text-danger">@Html.ValidationMessage("log-validation")</span>
         </form>
     </div>
 </div>

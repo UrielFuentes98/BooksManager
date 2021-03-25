@@ -108,7 +108,7 @@ namespace BooksManager.Controllers
             var bookOfLogs = booksRepository.GetBookById(bookId);
 
             //Order by date for correct display on table
-            bookOfLogs.ReadLogs = bookOfLogs.ReadLogs.OrderBy(l => l.LogDate).ToList();
+            bookOfLogs.ReadLogs = bookOfLogs.ReadLogs.OrderBy(l => l.PageNumber).ToList();
 
 
 
