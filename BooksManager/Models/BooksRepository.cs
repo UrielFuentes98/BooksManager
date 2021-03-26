@@ -43,5 +43,35 @@ namespace BooksManager.Models
             dbContext.Books.Update(book);
             dbContext.SaveChanges();
         }
+
+        public void UpdateBookStatus(int bookId)
+        {
+            var bookToUpdate = dbContext.Books.Include(b => b.ReadLogs).SingleOrDefault(b => b.BookId == bookId);
+            var bookHasLogs = bookToUpdate.ReadLogs.Any();
+
+            if (bookHasLogs)
+            {
+                var hasFinishLog = bookToUpdate.ReadLogs.Any(l => l.PageNumber == bookToUpdate.NumberOfPages);
+
+                //Check if status should be Read and updte it if not 
+                if (hasFinishLog && bookToUpdate.Status != BookStatus.Read)
+                {
+                    bookToUpdate.Status = BookStatus.Read;
+                    UpdateBook(bookToUpdate);
+                }
+                //Status should be CurrentlyReading, updte it if not
+                else if (bookToUpdate.Status != BookStatus.CurrentlyReading)
+                {
+                    bookToUpdate.Status = BookStatus.CurrentlyReading;
+                    UpdateBook(bookToUpdate);
+                }
+            }
+            //Status should be ToRead, update it if not
+            else if (bookToUpdate.Status != BookStatus.ToRead)
+            {
+                bookToUpdate.Status = BookStatus.ToRead;
+                UpdateBook(bookToUpdate);
+            }
+        }
     }
 }

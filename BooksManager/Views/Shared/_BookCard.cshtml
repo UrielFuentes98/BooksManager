@@ -14,18 +14,9 @@
                 <p class="card-entry"><strong>Author: </strong>@Model.Author.</p>
             }
             <p class="card-entry">@Model.NumberOfPages pages.</p>
-            @if (Model.Status == BookStatus.ToRead)
-            {
-                <div class="card-entry">
-                    <a class="btn btn-outline-primary">Started to read</a>
-                </div>
-            }
-            else if (Model.Status == BookStatus.CurrentlyReading)
-            {
-                <div class="card-entry">
-                    <a class="btn btn-outline-primary">Finished reading</a>
-                </div>
-            }
+
+            <partial name="_ChangeStatusButton" model="Model" />
+
             <div class="mt-2">
                 <a class="icon-link" title="Detail"
                    asp-controller="Book"
@@ -36,7 +27,7 @@
                 <a class="icon-link" title="Edit"
                    asp-controller="Book"
                    asp-action="Edit"
-                   asp-route-bookId="@Model.BookId">
+                   asp-route-id="@Model.BookId">
                     <i class="far fa-edit"></i>
                 </a>
                 <a class="icon-link" title="Delete"

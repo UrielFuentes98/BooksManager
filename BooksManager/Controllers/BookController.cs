@@ -23,14 +23,12 @@ namespace BooksManager.Controllers
             //If bookId passed as parameter search book, else create one
             if (id > 0)
             {
-                ViewData["Mode"] = "Edit";
                 var bookToEdit = booksRepository.GetBookById(id);
                 return View(bookToEdit);
             }
             else
             {
-                ViewData["Mode"] = "Create";
-                var newBook = new Book() { Status = newStatus };
+                var newBook = new Book() { Status = newStatus, ReadLogs = new List<ReadLog>() };
                 return View(newBook);
             }
         }
@@ -65,7 +63,7 @@ namespace BooksManager.Controllers
                         booksRepository.AddBook(bookReturned);
                         //Ask for initial log of book
                         return RedirectToAction("Create", "ReadLogs",
-                            new { bookId = bookReturned.BookId, bookName = bookReturned.Name });
+                            new { id = bookReturned.BookId, bookName = bookReturned.Name });
                         
                     case BookStatus.Read:
                         //Create finish log for book
@@ -113,6 +111,33 @@ namespace BooksManager.Controllers
 
 
             return View(bookOfLogs);
+        }
+
+        public IActionResult StartToRead(int id)
+        {
+            //Update status to currently reading and redirect to create first log
+            var bookToUpdate = booksRepository.GetBookById(id);
+            booksRepository.UpdateBook(bookToUpdate);
+
+            return RedirectToAction("Create", "ReadLogs",
+                            new { id = bookToUpdate.BookId, bookName = bookToUpdate.Name });
+
+        }
+
+        public IActionResult FinishReading(int id)
+        {
+            var bookFinished = booksRepository.GetBookById(id);
+            
+            //Create finish log for book
+            var finishLog = new ReadLog()
+            { Book = bookFinished, LogDate = DateTime.Today, PageNumber = bookFinished.NumberOfPages, Note = "Finish Log." };
+
+            //Add log, save book and update status
+            bookFinished.ReadLogs.Add(finishLog);
+            bookFinished.Status = BookStatus.Read;
+            booksRepository.UpdateBook(bookFinished);
+
+            return RedirectToAction("Index", "Home");
         }
 
     }

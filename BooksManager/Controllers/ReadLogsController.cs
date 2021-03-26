@@ -14,11 +14,13 @@ namespace BooksManager.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IReadLogsRepository readLogsRepository;
+        private readonly IBooksRepository booksRepository;
 
-        public ReadLogsController(ApplicationDbContext context, IReadLogsRepository readLogsRepository)
+        public ReadLogsController(ApplicationDbContext context, IReadLogsRepository readLogsRepository, IBooksRepository booksRepository)
         {
             _context = context;
             this.readLogsRepository = readLogsRepository;
+            this.booksRepository = booksRepository;
         }
 
         // GET: ReadLogs
@@ -58,6 +60,7 @@ namespace BooksManager.Controllers
             {
                 readLog.BookId = id;
                 var logCreated = readLogsRepository.AddLog(readLog);
+                booksRepository.UpdateBookStatus(id);
                 if (logCreated)
                 {
                     return RedirectToAction("Detail", "Book", new { id });
@@ -103,7 +106,7 @@ namespace BooksManager.Controllers
                 try
                 {
                     var logUpdated = readLogsRepository.UpdateLog(readLog);
-
+                    booksRepository.UpdateBookStatus(readLog.BookId);
                     if (logUpdated)
                     {
                         return RedirectToAction("Logs", "Book", new { id = readLog.BookId });
@@ -135,7 +138,7 @@ namespace BooksManager.Controllers
         {
 
             readLogsRepository.DeleteLog(id);
-
+            booksRepository.UpdateBookStatus(bookId);
             return RedirectToAction("Logs", "Book", new { id = bookId });
         }
 
