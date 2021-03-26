@@ -35,7 +35,7 @@ namespace BooksManager.Models
 
         public IEnumerable<Book> GetBooksFromUser(string userName)
         {
-            return dbContext.Books.Where(b => b.UserName == userName);
+            return dbContext.Books.Include(b => b.ReadLogs).Where(b => b.UserName == userName);
         }
 
         public void UpdateBook(Book book)

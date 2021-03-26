@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Book>
+﻿@model IEnumerable<BookWithStats>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -6,7 +6,7 @@
 
 <h3>To Read</h3>
 <div class="row">
-    @foreach (var book in Model.Where(b => b.Status == BookStatus.ToRead))
+    @foreach (var book in Model.Where(i => i.Book.Status == BookStatus.ToRead))
     {
         <partial name="_BookCard" model="book" />
     }
@@ -21,7 +21,7 @@
 
 <h3>Currently Reading</h3>
 <div class="row">
-    @foreach (var book in Model.Where(b => b.Status == BookStatus.CurrentlyReading))
+    @foreach (var book in Model.Where(i => i.Book.Status == BookStatus.CurrentlyReading))
     {
         <partial name="_BookCard" model="book" />
     }
@@ -36,7 +36,7 @@
 
 <h3>Read</h3>
 <div class="row">
-    @foreach (var book in Model.Where(b => b.Status == BookStatus.Read))
+    @foreach (var book in Model.Where(i => i.Book.Status == BookStatus.Read))
     {
         <partial name="_BookCard" model="book" />
     }

@@ -1,4 +1,4 @@
-﻿@model Book
+﻿@model BookWithStats
 
 <div class="col-lg-4 col-sm-6 mb-3">
     <div class="card pt-1">
@@ -6,34 +6,54 @@
             <a class="item-title"
                asp-controller="Book"
                asp-action="Detail"
-               asp-route-id="@Model.BookId">
-                <h5 class="card-title ">@Model.Name</h5>
+               asp-route-id="@Model.Book.BookId">
+                <h5 class="card-title ">@Model.Book.Name</h5>
             </a>
-            @if (!String.IsNullOrEmpty(Model.Author))
+            @if (!String.IsNullOrEmpty(Model.Book.Author))
             {
-                <p class="card-entry"><strong>Author: </strong>@Model.Author.</p>
+                <p class="card-entry"><strong>Author: </strong>@Model.Book.Author.</p>
             }
-            <p class="card-entry">@Model.NumberOfPages pages.</p>
+            <p class="card-entry">@Model.Book.NumberOfPages pages.</p>
 
-            <partial name="_ChangeStatusButton" model="Model" />
+            @if (Model.Book.Status == BookStatus.CurrentlyReading)
+            {
+                <p class="card-entry"><strong>Progress: </strong>@Model.ProgressPercentage% (page @Model.LastPageRead)</p>
+                <p class="card-entry"><strong>Days Reading: </strong>@Model.DaysReading days.</p>
+
+            }
+            else if (Model.Book.Status == BookStatus.Read)
+            {
+                <p class="card-entry"><strong>Date Finished: </strong>@Html.DisplayFor(m => m.DateFinished)</p>
+                @if (@Model.DaysReading > 0)
+                {
+                    <p class="card-entry"><strong>Days to read: </strong>@Model.DaysReading days.</p>
+                }
+                else
+                {
+                    <p class="card-entry"><strong>Days to read: </strong>same day</p>
+                }
+
+            }
+
+            <partial name="_ChangeStatusButton" model="Model.Book" />
 
             <div class="mt-2">
                 <a class="icon-link" title="Detail"
                    asp-controller="Book"
                    asp-action="Detail"
-                   asp-route-id="@Model.BookId">
+                   asp-route-id="@Model.Book.BookId">
                     <i class="fas fa-search-plus"></i>
                 </a>
                 <a class="icon-link" title="Edit"
                    asp-controller="Book"
                    asp-action="Edit"
-                   asp-route-id="@Model.BookId">
+                   asp-route-id="@Model.Book.BookId">
                     <i class="far fa-edit"></i>
                 </a>
                 <a class="icon-link" title="Delete"
                    asp-controller="Book"
                    asp-action="DeletePreview"
-                   asp-route-id="@Model.BookId">
+                   asp-route-id="@Model.Book.BookId">
                     <i class="fas fa-trash"></i>
                 </a>
             </div>
