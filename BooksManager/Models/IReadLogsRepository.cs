@@ -13,6 +13,6 @@ namespace BooksManager.Models
 
         ReadLog GetLogById(int logId);
 
-        void UpdateLog(ReadLog log);
+        bool UpdateLog(ReadLog log);
     }
 }

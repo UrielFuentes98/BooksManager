@@ -95,7 +95,7 @@ body {
     color: red;
 }
 
-.book-title, .book-title:hover {
+.item-title, .item-title:hover {
     color: black;
 }
 

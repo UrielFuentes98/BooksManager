@@ -19,8 +19,12 @@
                     {
                         <tr>
                             <th scope="row">
-                                @index
-                                
+                                <a class="item-title" title="Detail"
+                                   asp-controller="ReadLogs"
+                                   asp-action="Details"
+                                   asp-route-id="@log.ReadLogId">
+                                    @index
+                                </a>
                             </th>
                             <td>@Html.DisplayFor(modelItem => log.LogDate)</td>
                             <td>@log.PageNumber</td>
@@ -31,12 +35,6 @@
                                    asp-route-id="@log.ReadLogId"
                                    asp-route-bookId="@Model.BookId">
                                     <i class="fas fa-times"></i>
-                                </a>
-                                <a class="icon-link" title="Detail"
-                                   asp-controller="ReadLogs"
-                                   asp-action="Details"
-                                   asp-route-id="@Model.BookId">
-                                    <i class="fas fa-search-plus"></i>
                                 </a>
                                 <a class="icon-link" title="Edit"
                                    asp-controller="ReadLogs"
@@ -62,8 +60,8 @@
         <a class="mb-2"
            asp-controller="Book"
            asp-action="Detail"
-           asp-route-bookId="@Model.BookId">
-            Go Back To Book
+           asp-route-id="@Model.BookId">
+            Back To Book
         </a>
     </div>
 </div>

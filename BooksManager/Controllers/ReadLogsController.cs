@@ -102,7 +102,16 @@ namespace BooksManager.Controllers
             {
                 try
                 {
-                    readLogsRepository.UpdateLog(readLog);
+                    var logUpdated = readLogsRepository.UpdateLog(readLog);
+
+                    if (logUpdated)
+                    {
+                        return RedirectToAction("Logs", "Book", new { id = readLog.BookId });
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("log-validation", "There was an error validating the log. Check either the page number or the date.");
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -115,7 +124,7 @@ namespace BooksManager.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Logs", "Book", new { id = readLog.BookId });
+                
             }
             ViewData["BookId"] = new SelectList(_context.Books, "BookId", "Name", readLog.BookId);
             return View(readLog);

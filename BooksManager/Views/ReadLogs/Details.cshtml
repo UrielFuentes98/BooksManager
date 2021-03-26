@@ -8,31 +8,34 @@
 <h1>Details</h1>
 
 <div>
-    <h4>ReadLog</h4>
+    <h4>Read Log</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.PageNumber)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PageNumber)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.LogDate)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.LogDate)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Note)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Note)
-        </dd>
-        <dt class = "col-sm-2">
+        @if (!String.IsNullOrEmpty(Model.Note))
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Note)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Note)
+            </dd>
+        }
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Book)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Book.Name)
         </dd>
     </dl>

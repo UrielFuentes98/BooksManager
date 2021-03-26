@@ -42,7 +42,7 @@
             </a>
         </div>
 
-        <a class="mb-1 mt-1"
+        <a class="mb-1 mt-2"
            asp-controller="Book"
            asp-action="Logs"
            asp-route-id="@Model.BookId"
@@ -51,7 +51,9 @@
         <a class="mb-2"
            asp-controller="ReadLogs"
            asp-action="Create"
-           asp-route-bookId="@Model.BookId"
+           asp-route-id="@Model.BookId"
            asp-route-bookName="@Model.Name">Add Log</a>
+
+        <a class="mb-2" asp-controller="Home" asp-action="Index">Back to Library</a>
     </div>
 </div>
