@@ -85,7 +85,9 @@ namespace BooksManager.Controllers
         public IActionResult Detail (int id)
         {
             var bookDetail = booksRepository.GetBookById(id);
-            return View(bookDetail);
+            var detailsWithStats = booksRepository.AddStats(bookDetail);
+            ViewData["itemsClass"] = "detail-entry";
+            return View(detailsWithStats);
         }
 
         public IActionResult DeletePreview(int id)

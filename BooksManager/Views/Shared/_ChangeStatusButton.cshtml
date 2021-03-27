@@ -2,7 +2,7 @@
 
 @if (Model.Status == BookStatus.ToRead)
 {
-    <div class="card-entry">
+    <div class="card-entry mt-2">
         <a asp-controller="Book"
            asp-action="StartToRead"
            asp-route-id="@Model.BookId"
@@ -11,7 +11,7 @@
 }
 else if (Model.Status == BookStatus.CurrentlyReading)
 {
-    <div class="card-entry">
+    <div class="card-entry mt-2">
         <a asp-controller="Book"
            asp-action="FinishReading"
            asp-route-id="@Model.BookId"

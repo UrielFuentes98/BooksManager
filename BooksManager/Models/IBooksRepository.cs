@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BooksManager.ViewsModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,5 +19,7 @@ namespace BooksManager.Models
         void DeleteBook(Book book);
 
         void UpdateBookStatus(int bookId);
+
+        BookWithStats AddStats(Book book);
     }
 }

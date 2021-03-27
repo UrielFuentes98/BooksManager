@@ -1,4 +1,5 @@
 ﻿using BooksManager.Data;
+using BooksManager.ViewsModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -73,5 +74,51 @@ namespace BooksManager.Models
                 UpdateBook(bookToUpdate);
             }
         }
+
+        public BookWithStats AddStats(Book book)
+        {
+            var bookWithStats = new BookWithStats
+            {
+                Book = book
+            };
+
+            if (book.Status != BookStatus.ToRead)
+            {
+                //Get logs of book sorted.
+                var logsSorted = from log in book.ReadLogs
+                                 orderby log.PageNumber
+                                 select log;
+
+                //Get date of first log entered and last page entered
+                var firstDate = logsSorted.First().LogDate;
+                var lastPage = logsSorted.Last().PageNumber;
+
+                bookWithStats.LastPageRead = lastPage;
+                bookWithStats.DateFinished = logsSorted.Last().LogDate;
+
+                //Calcualte days reading and percentage of progress
+                var dateDifference = DateTime.Now.Date - firstDate.Date;
+                bookWithStats.DaysReading = dateDifference.Days;
+
+                bookWithStats.ProgressPercentage = (lastPage * 100) / book.NumberOfPages;
+
+                //Calculating pages per week.
+                if (bookWithStats.DaysReading >= 7)
+                {
+                    bookWithStats.PagesPerWeek = book.NumberOfPages / (bookWithStats.DaysReading / 7);
+                }
+                else
+                {
+                    bookWithStats.PagesPerWeek = book.NumberOfPages;
+                }
+
+                //_logger.LogInformation(book.Name);
+                //_logger.LogInformation(book.Status.ToString());
+                //_logger.LogInformation(firstDate.ToString());
+            }
+
+            return bookWithStats;
+        }
+
     }
 }

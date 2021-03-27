@@ -15,25 +15,7 @@
             }
             <p class="card-entry">@Model.Book.NumberOfPages pages.</p>
 
-            @if (Model.Book.Status == BookStatus.CurrentlyReading)
-            {
-                <p class="card-entry"><strong>Progress: </strong>@Model.ProgressPercentage% (page @Model.LastPageRead)</p>
-                <p class="card-entry"><strong>Days Reading: </strong>@Model.DaysReading days.</p>
-
-            }
-            else if (Model.Book.Status == BookStatus.Read)
-            {
-                <p class="card-entry"><strong>Date Finished: </strong>@Html.DisplayFor(m => m.DateFinished)</p>
-                @if (@Model.DaysReading > 0)
-                {
-                    <p class="card-entry"><strong>Days to read: </strong>@Model.DaysReading days.</p>
-                }
-                else
-                {
-                    <p class="card-entry"><strong>Days to read: </strong>same day</p>
-                }
-
-            }
+            <partial name="_MainBookStats" model="Model" />
 
             <partial name="_ChangeStatusButton" model="Model.Book" />
 

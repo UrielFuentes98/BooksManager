@@ -16,6 +16,8 @@ namespace BooksManager.ViewsModels
 
         public int LastPageRead { get; set; }
 
+        public int PagesPerWeek { get; set; }
+
         [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime DateFinished { get; set; }
     }

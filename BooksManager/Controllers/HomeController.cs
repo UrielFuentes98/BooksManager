@@ -31,13 +31,13 @@ namespace BooksManager.Controllers
             //Calculate stats for each book and store in list
             foreach (var book in bookList)
             {
-                bookWithStatsList.Add(calculateStats(book));
+                bookWithStatsList.Add(booksRepository.AddStats(book));
             }
 
             var booksSorted = from book in bookWithStatsList
                              orderby book.DateFinished
                              select book;
-
+            ViewData["itemsClass"] = "card-entry";
             return View(booksSorted);
         }
 
@@ -52,39 +52,6 @@ namespace BooksManager.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        BookWithStats calculateStats (Book book)
-        {
-            var bookWithStats = new BookWithStats
-            {
-                Book = book
-            };
 
-            if (book.Status != BookStatus.ToRead)
-            {
-                //Get logs of book sorted.
-                var logsSorted = from log in book.ReadLogs
-                                 orderby log.PageNumber
-                                 select log;
-
-                //Get date of first log entered and last page entered
-                var firstDate = logsSorted.First().LogDate;
-                var lastPage = logsSorted.Last().PageNumber;
-
-                bookWithStats.LastPageRead = lastPage;
-                bookWithStats.DateFinished = logsSorted.Last().LogDate;
-
-                //Calcualte days reading and percentage of progress
-                var dateDifference = DateTime.Now.Date - firstDate.Date;
-                bookWithStats.DaysReading = dateDifference.Days;
-
-                bookWithStats.ProgressPercentage = (lastPage * 100) / book.NumberOfPages;
-
-                _logger.LogInformation(book.Name);
-                _logger.LogInformation(book.Status.ToString());
-                _logger.LogInformation(firstDate.ToString());
-            }
-
-            return bookWithStats;
-        }
     }
 }
