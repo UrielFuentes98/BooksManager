@@ -18,6 +18,12 @@ namespace BooksManager.Models
 
         private bool validateLog(ReadLog log)
         {
+            //Log date cannot be after today
+            if (log.LogDate.Date > DateTime.Today)
+            {
+                return false;
+            }
+
             var newBook = dbContext.Books.AsNoTracking().Include(b => b.ReadLogs).SingleOrDefault(b => b.BookId == log.BookId);
             var previousLogs = newBook.ReadLogs.OrderBy(l => l.PageNumber).ToList();
 
