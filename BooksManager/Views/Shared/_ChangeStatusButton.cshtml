@@ -1,0 +1,20 @@
+﻿@model Book
+
+@if (Model.Status == BookStatus.ToRead)
+{
+    <div class="card-entry mt-2">
+        <a asp-controller="Book"
+           asp-action="StartToRead"
+           asp-route-id="@Model.BookId"
+           class="btn btn-outline-primary">Started to read</a>
+    </div>
+}
+else if (Model.Status == BookStatus.CurrentlyReading)
+{
+    <div class="card-entry mt-2">
+        <a asp-controller="Book"
+           asp-action="FinishReading"
+           asp-route-id="@Model.BookId"
+           class="btn btn-outline-primary">Finished reading</a>
+    </div>
+}

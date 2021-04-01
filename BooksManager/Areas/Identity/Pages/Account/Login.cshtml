@@ -1,0 +1,49 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<div class="row">
+    <div class="col-md-5 col-xl-4">
+        <section>
+            <h1>@ViewData["Title"]</h1>
+            <form id="account" method="post">
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Input.Email"></label>
+                    <input asp-for="Input.Email" class="form-control" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Password"></label>
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Log in</button>
+                    <button type="submit" class="btn btn-link pb-0 ml-3" asp-route-demo="true">Demo User</button>
+                </div>
+                <div class="form-group">
+                    <p>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+    <div class="col-xl-6 col-md-6 offset-md-1 offset-xl-2">
+        <h1 class="text-center mt-md-3 mt-xl-5">BooksManager</h1>
+        <h3 class="text-center mt-md-3 mt-xl-5">Keep track of the important information about your reading habits.</h3>
+        <h3 class="mt-md-3 mt-xl-5">With BooksManager you can:</h3>
+        <ul>
+            <li>Record information about your books: name, autor, reading status, number of pages.</li>
+            <li>Record progress logs of your books: date and page number.</li>
+            <li>Get useful stats about the books you're reading or the ones that you have read.</li>
+        </ul>
+        <p></p>
+    </div>
+</div>
+

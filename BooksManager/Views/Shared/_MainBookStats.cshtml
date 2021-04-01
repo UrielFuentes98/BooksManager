@@ -1,0 +1,21 @@
+﻿@model BookWithStats
+
+@if (Model.Book.Status == BookStatus.CurrentlyReading)
+{
+    <div class="@ViewData["itemsClass"]"><strong>Progress: </strong>@Model.ProgressPercentage% (page @Model.LastPageRead)</div>
+    <div class="@ViewData["itemsClass"]"><strong>Days Reading: </strong>@Model.DaysReading days.</div>
+
+}
+else if (Model.Book.Status == BookStatus.Read)
+{
+    <div class="@ViewData["itemsClass"]"><strong>Date Finished: </strong>@Html.DisplayFor(m => m.DateFinished)</div>
+    @if (@Model.DaysReading > 0)
+    {
+        <div class="@ViewData["itemsClass"]"><strong>Days to read: </strong>@Model.DaysReading days.</div>
+    }
+    else
+    {
+        <div class="@ViewData["itemsClass"]"><strong>Days to read: </strong>same day</div>
+    }
+
+}

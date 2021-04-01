@@ -1,0 +1,35 @@
+﻿@model Book
+
+@{
+    ViewData["Title"] = "Edit/Create";
+}
+
+<div class="row">
+    <div class="col-4 offset-1">
+        <form method="post" asp-action="Edit">
+            <input type="hidden" asp-for="BookId" />
+            <input type="hidden" asp-for="UserName" />
+            <input type="hidden" asp-for="Status" />
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Author"></label>
+                <input asp-for="Author" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfPages"></label>
+                <input asp-for="NumberOfPages" class="form-control" />
+                <span asp-validation-for="NumberOfPages" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Note"></label>
+                <textarea asp-for="Note" class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>

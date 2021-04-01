@@ -1,0 +1,67 @@
+﻿@model Book
+
+<div class="row justify-content-center">
+    <div class="col-lg-5 col-sm-10 card pt-3 card-item">
+        <h3 class="text-center mb-3">Logs for <span class="book-title-card"> @Model.Name </span></h3>
+        @if (Model.ReadLogs.Any())
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Page</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var (log, index) in Model.ReadLogs.WithIndex())
+                    {
+                        <tr>
+                            <th scope="row">
+                                <a class="item-title" title="Detail"
+                                   asp-controller="ReadLogs"
+                                   asp-action="Details"
+                                   asp-route-id="@log.ReadLogId">
+                                    @index
+                                </a>
+                            </th>
+                            <td>@Html.DisplayFor((model) => log.LogDate)</td>
+                            <td>@log.PageNumber</td>
+                            <td>
+                                <a class="icon-link delete-log" title="Delete"
+                                   asp-controller="ReadLogs"
+                                   asp-action="Delete"
+                                   asp-route-id="@log.ReadLogId"
+                                   asp-route-bookId="@Model.BookId">
+                                    <i class="fas fa-times"></i>
+                                </a>
+                                <a class="icon-link" title="Edit"
+                                   asp-controller="ReadLogs"
+                                   asp-action="Edit"
+                                   asp-route-id="@log.ReadLogId">
+                                    <i class="far fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-info">No logs available.</div>
+        }
+        <a class="mb-2"
+           asp-controller="ReadLogs"
+           asp-action="Create"
+           asp-route-id="@Model.BookId"
+           asp-route-bookName="@Model.Name">Add Log</a>
+        <a class="mb-2"
+           asp-controller="Book"
+           asp-action="Detail"
+           asp-route-id="@Model.BookId">
+            Back To Book
+        </a>
+    </div>
+</div>

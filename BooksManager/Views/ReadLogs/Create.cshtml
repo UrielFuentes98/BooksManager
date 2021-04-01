@@ -1,0 +1,45 @@
+﻿@model ReadLog
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Add log for <span class="book-title-card"> @ViewData["BookName"] </span></h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" asp-route-id="@ViewData["BookId"]" asp-route-bookName="@ViewData["BookName"]">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PageNumber" class="control-label"></label>
+                <input asp-for="PageNumber" class="form-control" />
+                <span asp-validation-for="PageNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LogDate" class="control-label"></label>
+                <input type="date" asp-for="LogDate" class="form-control" />
+                <span asp-validation-for="LogDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Note" class="control-label"></label>
+                <input asp-for="Note" class="form-control" />
+                <span asp-validation-for="Note" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-controller="Book"
+                   asp-action="Logs"
+                   asp-route-id="@ViewData["BookId"]"
+                   class="btn btn-danger ml-3">Cancel</a>
+            </div>
+            <span class="text-danger">@Html.ValidationMessage("log-validation")</span>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

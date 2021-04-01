@@ -1,0 +1,22 @@
+﻿@model Book
+ 
+@{
+    ViewData["Title"] = "Delete preview";
+}
+
+<div class="row justify-content-center">
+    <div class="col">
+        <partial name="_BookCard" model="Model" />
+        <a class="btn btn-danger mr-3"
+           asp-controller="Book"
+           asp-action="DeleteConfirmation"
+           asp-route-id="@Model.BookId">
+            Confirm Delete
+        </a>
+        <a class="btn btn-primary"
+           asp-controller="Home"
+           asp-action="Index">
+            Cancel
+        </a>
+    </div>
+</div>
