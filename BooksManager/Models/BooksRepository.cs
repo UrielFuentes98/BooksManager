@@ -109,12 +109,9 @@ namespace BooksManager.Models
                 }
                 else
                 {
-                    bookWithStats.PagesPerWeek = book.NumberOfPages;
+                    bookWithStats.PagesPerWeek = bookWithStats.LastPageRead;
                 }
 
-                //_logger.LogInformation(book.Name);
-                //_logger.LogInformation(book.Status.ToString());
-                //_logger.LogInformation(firstDate.ToString());
             }
 
             return bookWithStats;
