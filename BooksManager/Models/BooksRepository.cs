@@ -105,7 +105,7 @@ namespace BooksManager.Models
                 //Calculating pages per week.
                 if (bookWithStats.DaysReading >= 7)
                 {
-                    bookWithStats.PagesPerWeek = book.NumberOfPages / (bookWithStats.DaysReading / 7);
+                    bookWithStats.PagesPerWeek = (int) (bookWithStats.LastPageRead / ((double)bookWithStats.DaysReading / 7));
                 }
                 else
                 {
