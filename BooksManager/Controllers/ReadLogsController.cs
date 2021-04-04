@@ -23,13 +23,6 @@ namespace BooksManager.Controllers
             this.booksRepository = booksRepository;
         }
 
-        // GET: ReadLogs
-        public async Task<IActionResult> Index()
-        {
-            var applicationDbContext = _context.ReadLogs.Include(r => r.Book);
-            return View(await applicationDbContext.ToListAsync());
-        }
-
         // GET: ReadLogs/Details/5
         public IActionResult Details(int id)
         {
