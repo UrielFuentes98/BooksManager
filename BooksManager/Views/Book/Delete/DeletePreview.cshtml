@@ -1,4 +1,4 @@
-﻿@model Book
+﻿@model BookWithStats
  
 @{
     ViewData["Title"] = "Delete preview";
@@ -10,7 +10,7 @@
         <a class="btn btn-danger mr-3"
            asp-controller="Book"
            asp-action="DeleteConfirmation"
-           asp-route-id="@Model.BookId">
+           asp-route-id="@Model.Book.BookId">
             Confirm Delete
         </a>
         <a class="btn btn-primary"

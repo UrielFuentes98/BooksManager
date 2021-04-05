@@ -93,7 +93,8 @@ namespace BooksManager.Controllers
         public IActionResult DeletePreview(int id)
         {
             var bookToDelete = booksRepository.GetBookById(id);
-            return View("Delete/DeletePreview", bookToDelete);
+            var bookWithStats = booksRepository.AddStats(bookToDelete);
+            return View("Delete/DeletePreview", bookWithStats);
         }
 
         public IActionResult DeleteConfirmation(int id)
