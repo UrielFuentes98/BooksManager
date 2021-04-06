@@ -33,10 +33,13 @@
 
         <partial name="_MainBookStats" model="Model" />
 
-        <div class="detail-entry">
-            <span class="font-weight-bold">Pages per week: </span>
-            <span>@Model.PagesPerWeek</span>
-        </div>
+        @if (Model.Book.Status != BookStatus.ToRead)
+        {
+            <div class="detail-entry">
+                <span class="font-weight-bold">Pages per week: </span>
+                <span>@Model.PagesPerWeek</span>
+            </div>
+        }
 
         <div class="mt-2">
             <a class="icon-link" title="Edit"
