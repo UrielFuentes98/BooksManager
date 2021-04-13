@@ -63,7 +63,6 @@ namespace BooksManager.Controllers
                     ModelState.AddModelError("log-validation", "There was an error validating the log. Check either the page number or the date.");
                 }
             }
-            //ViewData["BookId"] = new SelectList(_context.Books, "BookId", "Name", readLog.BookId);
             ViewData["BookId"] = id;
             ViewData["BookName"] = bookName;
             return View(readLog);
@@ -78,7 +77,6 @@ namespace BooksManager.Controllers
             {
                 return NotFound();
             }
-            //ViewData["BookId"] = new SelectList(_context.Books, "BookId", "Name", readLog.BookId);
             return View(readLog);
         }
 
